@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, useLocation } from 'react-router-dom';
 
 import Home from './views/home/home';
 import Consult from './views/consult/consult';
@@ -11,10 +11,12 @@ import NavBar from './components/navBar/navBar';
 import './App.css';
 
 function App() {
-  
+  let location = useLocation();
+  const allowedPaths = ['/', '/survey', '/consult'];
+
   return (
     <>
-      <NavBar/>
+      {allowedPaths.includes(location.pathname) && <NavBar />}
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/survey' element={<Survey/>} />
