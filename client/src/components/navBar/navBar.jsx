@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 export default function NavBar (){
 
     return(
-        <nav className="w-screen h-16 flex 
+        <nav className="w-full h-16 flex 
         bg-pink-800 items-center text-xl text-white
         ">
             <ul className='inline-flex justify-evenly w-3/6 px-4'>
