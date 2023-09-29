@@ -7,7 +7,7 @@ const conection = DB_URL || `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${D
 const ResponsesModel = require('./models/responses');
 
 const sequelize = new Sequelize(`${conection}`,
-   { logging: false, native: false }
+   { logging: false, native: false, ssl:true }
 );
 
 ResponsesModel(sequelize);
