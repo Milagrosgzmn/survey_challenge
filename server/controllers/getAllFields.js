@@ -1,4 +1,3 @@
-require('dotenv').config();
 const axios = require('axios');
 const url = process.env.URLBACK1 || 'http://localhost:5000/datos';
 

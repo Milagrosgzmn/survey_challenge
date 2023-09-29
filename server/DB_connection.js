@@ -1,4 +1,3 @@
-require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME,DB_PORTDB, DB_URL } = process.env;
 const PORT = DB_PORTDB || 5432;
