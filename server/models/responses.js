@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      preferred_laguage:{
+      preferred_language:{
         type: DataTypes.STRING,
         allowNull: false,
       },
@@ -32,5 +32,16 @@ module.exports = (sequelize) => {
         allowNull:true,
       }
 
-   }, { timestamps: false });
+   }, { timestamps: false,
+      hooks: {
+        beforeValidate: (instance) => {
+          if (instance.full_name) {
+              instance.full_name = instance.full_name.toLowerCase().trim();
+          }
+          if (instance.phone_number) {
+              instance.phone_number = instance.phone_number.trim();
+          }
+        }
+    }
+  });
 };
