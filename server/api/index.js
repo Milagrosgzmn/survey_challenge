@@ -1,8 +1,6 @@
 const server = require('../serverConfig');
 const fs = require('fs');
 
-const PORT = process.env.PORT2 || 5000; 
-
 const jsonFile = './api/fields.json';
 
 server.get('/datos', (req, res) => {
@@ -23,6 +21,6 @@ server.get('/datos', (req, res) => {
   });
 });
 
-server.listen(PORT, ()=>{
-    console.log(`levantamos con exito el servidor en el puerto:${PORT}`);
-});
+module.exports = {
+server2: server,
+}
