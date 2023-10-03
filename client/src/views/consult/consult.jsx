@@ -1,5 +1,7 @@
-import { useState } from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+import { useEffect, useState } from "react";
 import axios from "axios";
+import Swal from "sweetalert2";
 import { setUser } from "../../redux/actions/userActions";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -8,6 +10,11 @@ export default function Consult (){
     const [responses, setResponses] = useState({});
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    useEffect(()=>{
+        dispatch(setUser(''));
+    },[]);
+
     function handleChange(event){
 
         setResponses((prevResponses) => ({
@@ -19,7 +26,6 @@ export default function Consult (){
         e.preventDefault();
         
         try {
-            console.log(responses);
             const {data} = await  axios.post('/survey/results', {
                 phone_number:responses.phone_number,
                 full_name: responses.full_name
@@ -27,7 +33,13 @@ export default function Consult (){
             dispatch(setUser(data.id));
             navigate('/survey/update');
         } catch (error) {
-          console.log(error.response.data, 'consult');  
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '¡Hubo un error!',
+                footer: '<a href="">¿Son correctos los datos ingresados?</a>'
+              });
+          console.error(error.response.data, 'consult');  
         }
     }
 

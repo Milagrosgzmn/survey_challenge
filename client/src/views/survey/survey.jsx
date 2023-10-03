@@ -1,5 +1,6 @@
 /* eslint-disable no-prototype-builtins */
 import axios from "axios";
+import Swal from 'sweetalert2';
 import validation from './validation';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -7,8 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {setUser} from "../../redux/actions/userActions";
 export default function Survey (props){
     const result = props.result ? props.result : false;
-
-    const {id} = useSelector(state=>{
+    const {id} = useSelector(state =>{
         return state.user;
     });
     const others = ['select', 'submit', 'radio'];
@@ -24,8 +24,13 @@ export default function Survey (props){
         axios('/survey/fields').then(({data})=>{
             setItems(data);
         }).catch((e)=>{
-            //swal e
-            console.log(e.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '¡Hubo un error!',
+                footer: '<a href="">¿Por qué tengo este problema?</a>'
+              });
+            console.error(e);
         });
         if(Object.entries(result).length){
             setResponses(result);
@@ -34,7 +39,15 @@ export default function Survey (props){
     },[result]);
 
     function handleChange(event){
-            setResponses((prevResponses) => ({
+
+        if(event.target.type === "checkbox"){
+            setResponses({
+                ...responses,
+            [event.target.name]: event.target.checked,
+            
+        });
+    }else{
+        setResponses((prevResponses) => ({
                 ...prevResponses,
             [event.target.name]: `${event.target.value}`
         }));
@@ -44,22 +57,28 @@ export default function Survey (props){
             [event.target.name]: `${event.target.value}`
         }));    
     }
+    }
 
 
     async function submitHandler (e){
         e.preventDefault();
-        console.log(responses);
+        
         setTried(true);
         if(Object.entries(responses).length && !Object.entries(errors).length){
             if(editing){
                 try {
                     const {data} = await axios.put('/survey/update', {update: responses, id: id});  
                     if(data){
-                        navigate('/survey/success');
+                        return navigate('/survey/success');
                     }
                 } catch (error) {
-                    //swal e
-                console.log(error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: '¡Hubo un error!',
+                        footer: '<a href="">¿Por qué tengo este problema?</a>'
+                      });
+                console.error(error);
                 }
             }else{
               try {
@@ -69,8 +88,13 @@ export default function Survey (props){
                     navigate('/survey/success');
                 }
             } catch (error) {
-                //swal e
-            console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: '¡Hubo un error!',
+                    footer: '<a href="">¿Por qué tengo este problema?</a>'
+                  });
+            console.error(error);
             }  
             }
 
@@ -140,10 +164,10 @@ export default function Survey (props){
                     className="px-4 py-2 ml-2"
                     /* required={item.required} */
                     onChange={handleChange}  
-                    value={item.type === 'checkbox' ? event.target.checked ? true : false : responses[item.name] }
+                    value={item.type === 'checkbox' ? event.target.checked ? true : false : responses[item.name]}
                     name={item.name} 
                     type={item.type}
-                    checked={item.type === 'checkbox' ? responses[item.name]? true : false : undefined}
+                    checked={item.type === 'checkbox' ? editing? responses[item.name]? true : false : responses[item.name] : undefined}
                     />
                     {(errors[item.name] &&( responses[item.name] || triedToSend)) && <span className="text-red-400">{errors[item.name]} *</span>
                     }
