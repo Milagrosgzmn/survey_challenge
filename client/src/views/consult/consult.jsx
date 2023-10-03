@@ -19,11 +19,11 @@ export default function Consult (){
         e.preventDefault();
         
         try {
+            console.log(responses);
             const {data} = await  axios.post('/survey/results', {
                 phone_number:responses.phone_number,
                 full_name: responses.full_name
             });
-            console.log(data.id);
             dispatch(setUser(data.id));
             navigate('/survey/update');
         } catch (error) {
