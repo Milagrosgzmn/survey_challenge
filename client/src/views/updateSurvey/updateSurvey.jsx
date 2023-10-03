@@ -1,4 +1,5 @@
 import axios from "axios";
+import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import Survey from "../survey/survey";
@@ -24,8 +25,13 @@ export default function UpdateSurvey (){
             setResults(data);
         }).catch((error)=>{
             console.error(error.response.data, error.message);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '¡Hubo un error!',
+                footer: '<a href="">¿Son los datos ingresados correctos?</a>'
+              });
         });
-         
         }
     },[id]);
 
