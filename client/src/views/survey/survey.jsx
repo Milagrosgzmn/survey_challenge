@@ -92,7 +92,7 @@ export default function Survey (props){
                     icon: 'error',
                     title: 'Oops...',
                     text: '¡Hubo un error!',
-                    footer: '<a href="">¿Por qué tengo este problema?</a>'
+                    footer: '<a href="">¿Por qué tengo este problema? </a>'
                   });
             console.error(error);
             }  
