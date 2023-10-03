@@ -38,9 +38,6 @@ module.exports = (sequelize) => {
           if (instance.full_name) {
               instance.full_name = instance.full_name.toLowerCase().trim();
           }
-          if (instance.phone_number) {
-              instance.phone_number = instance.phone_number.trim();
-          }
         }
     }
   });

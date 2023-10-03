@@ -3,11 +3,14 @@ import axios from "axios";
 import validation from './validation';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {setUser} from "../../redux/actions/userActions";
 export default function Survey (props){
     const result = props.result ? props.result : false;
 
+    const {id} = useSelector(state=>{
+        return state.user;
+    });
     const others = ['select', 'submit', 'radio'];
     const [items, setItems] = useState([]);
     const [errors, setErrors] = useState({});
@@ -22,7 +25,7 @@ export default function Survey (props){
             setItems(data);
         }).catch((e)=>{
             //swal e
-            console.log(e);
+            console.log(e.message);
         });
         if(Object.entries(result).length){
             setResponses(result);
@@ -50,18 +53,16 @@ export default function Survey (props){
         if(Object.entries(responses).length && !Object.entries(errors).length){
             if(editing){
                 try {
-                    const {data} = await axios.put('/survey/update', {responses: responses});  
+                    const {data} = await axios.put('/survey/update', {update: responses, id: id});  
                     if(data){
-                        dispatch(setUser(data.id));
-                        return navigate('/survey/success');
+                        navigate('/survey/success');
                     }
                 } catch (error) {
                     //swal e
                 console.log(error);
                 }
-            }
-
-            try {
+            }else{
+              try {
                 const {data} = await axios.post('/survey/', {responses: responses});  
                 if(data){
                     dispatch(setUser(data.id));
@@ -70,7 +71,10 @@ export default function Survey (props){
             } catch (error) {
                 //swal e
             console.log(error);
+            }  
             }
+
+            
         }
     }
 
