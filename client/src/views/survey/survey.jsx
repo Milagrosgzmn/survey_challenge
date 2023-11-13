@@ -2,6 +2,7 @@
 import axios from "axios";
 import Swal from 'sweetalert2';
 import validation from './validation';
+import { ThreeDots } from  'react-loader-spinner';
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,12 +18,14 @@ export default function Survey (props){
     const [responses, setResponses] = useState({});
     const [triedToSend, setTried] = useState(false);
     const [editing, setEditing] = useState(false);
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     useEffect(()=>{
         axios('/survey/fields').then(({data})=>{
             setItems(data);
+            setLoading(false);
         }).catch((e)=>{
             Swal.fire({
                 icon: 'error',
@@ -104,7 +107,18 @@ export default function Survey (props){
 
     return (
         <main className="flex justify-center mt-4">
-            <form className="md:w-8/12 lg:w-6/12" onSubmit={submitHandler}>
+           {loading ? (
+        <ThreeDots 
+        height="80" 
+        width="80" 
+        radius="9"
+        color="white" 
+        ariaLabel="three-dots-loading"
+        wrapperStyle={{}}
+        wrapperClassName=""
+        visible={true}
+         />
+      ) : ( <form className="md:w-8/12 lg:w-6/12" onSubmit={submitHandler}>
             {items && items.map((item, i) =>(
                 <div className="my-4"  key={i}>
                 { item.type === 'submit' &&(
@@ -176,7 +190,7 @@ export default function Survey (props){
                 </div>
             ))
             }
-            </form>
+            </form>)}
         </main>
     );
 }
