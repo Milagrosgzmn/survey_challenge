@@ -13,7 +13,7 @@ import NavBar from './components/navBar/navBar';
 import './App.css';
 
 const apiBackUrl = import.meta.env.VITE_API_BACK_URL;
-const urlApi = apiBackUrl || 'http://localhost:3001';
+const urlApi = apiBackUrl;
 axios.defaults.baseURL = urlApi;
 
 function App() {
