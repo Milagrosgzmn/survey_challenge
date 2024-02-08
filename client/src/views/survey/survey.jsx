@@ -24,7 +24,6 @@ export default function Survey (props){
 
     useEffect(()=>{
         axios('/survey/fields').then(({data})=>{
-                console.log(data);
             setItems(data);
             setLoading(false);
         }).catch((e)=>{

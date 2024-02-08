@@ -11,18 +11,14 @@ import Success from "./views/success/success";
 import NavBar from './components/navBar/navBar';
 
 import './App.css';
-import { useEffect } from "react";
+
 
 const apiBackUrl = import.meta.env.VITE_API_BACK_URL;
-axios.defaults.baseURL = apiBackUrl;
+axios.defaults.baseURL = apiBackUrl || 'http://localhost:3000';
 
 function App() {
   let location = useLocation();
   const allowedPaths = ['/', '/survey','/survey/success', "/survey/update",'/consult'];
-
-  useEffect(()=>{
-    console.log(apiBackUrl);
-  },[]);
 
   return (
     <>
