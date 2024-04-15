@@ -1,20 +1,16 @@
-require('dotenv').config();
 const server = require('./serverConfig');
 const mainRouter = require('./routes/index');
+const apiRouter = require('./api/index');
 const {conn} = require('./DB_connection');
-const {server2} = require('./api/index');
 
-const PORT = process.env.PORT;
-const PORT2 = process.env.PORT2;
+const PORT2 = process.env.PORT2 || 3000;
 server.use('/survey', mainRouter);
-server2.listen(PORT2, ()=>{
+server.use('/api',apiRouter);
+
+conn.sync({force: false}).then(()=>{
+    server.listen(PORT2, ()=>{
     
     console.log(`levantamos con exito el servidor en el puerto:${PORT2}`);
-});
-conn.sync({force: false}).then(()=>{
-    server.listen(PORT, ()=>{
-    
-    console.log(`levantamos con exito el servidor en el puerto:${PORT}`);
 });
 });
  

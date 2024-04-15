@@ -1,9 +1,9 @@
-const server = require('../serverConfig');
+const {Router} = require('express');
 const fs = require('fs');
-
+const apiRouter = Router();
 const jsonFile = './api/fields.json';
 
-server.get('/datos', (req, res) => {
+apiRouter.get('/datos', (req, res) => {
   fs.readFile(jsonFile, 'utf8', (err, data) => {
     if (err) {
       console.error('Error al leer el archivo JSON:', err);
@@ -21,6 +21,4 @@ server.get('/datos', (req, res) => {
   });
 });
 
-module.exports = {
-server2: server,
-}
+module.exports = apiRouter;
