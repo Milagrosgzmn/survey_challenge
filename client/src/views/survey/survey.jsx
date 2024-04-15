@@ -42,12 +42,10 @@ export default function Survey (props){
     },[result]);
 
     function handleChange(event){
-
         if(event.target.type === "checkbox"){
             setResponses({
                 ...responses,
-            [event.target.name]: event.target.checked,
-            
+            [event.target.name]: event.target.checked, 
         });
     }else{
         setResponses((prevResponses) => ({
@@ -62,10 +60,8 @@ export default function Survey (props){
     }
     }
 
-
     async function submitHandler (e){
         e.preventDefault();
-        
         setTried(true);
         if(Object.entries(responses).length && !Object.entries(errors).length){
             if(editing){
@@ -178,7 +174,7 @@ export default function Survey (props){
                     className="px-4 py-2 ml-2"
                     /* required={item.required} */
                     onChange={handleChange}  
-                    value={item.type === 'checkbox' ? event.target.checked ? true : false : responses[item.name]}
+                    value={responses[item.type] === 'checkbox' ? responses[item.name] ? true : false : responses[item.name] ? responses[item.name]:''}
                     name={item.name} 
                     type={item.type}
                     checked={item.type === 'checkbox' ? editing? responses[item.name]? true : false : responses[item.name] : undefined}
