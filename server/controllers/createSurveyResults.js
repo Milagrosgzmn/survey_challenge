@@ -2,13 +2,9 @@ const {Responses} = require('../DB_connection');
 
 const createSurveyResults = async(req)=>{
     const {responses} = req.body;
-    const stringToBoolean = responses.newsletter_subscription === 'true';
     try {
         if(responses){
-            const newResponse = await Responses.create({
-                ...responses,
-                newsletter_subscription: stringToBoolean,
-            });
+            const newResponse = await Responses.create(responses);
             return newResponse;  
         }
         return false;
