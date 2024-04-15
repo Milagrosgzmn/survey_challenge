@@ -1,7 +1,7 @@
 const {Responses} = require('../DB_connection');
 
 const getResults = async(req)=>{
-    const {id, phone_number, full_name} = req.body;
+    const {id, phone_number, full_name} = req.query;
    try {
         let survey;
         if (id) {
