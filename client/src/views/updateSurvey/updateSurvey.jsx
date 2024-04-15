@@ -21,7 +21,7 @@ export default function UpdateSurvey (){
 
     useEffect(()=>{
         if (id) {
-        axios.post('/survey/results', {id}).then(({data})=>{
+        axios(`/survey/results?id=${id}`).then(({data})=>{
             setResults(data);
         }).catch((error)=>{
             console.error(error.response.data, error.message);

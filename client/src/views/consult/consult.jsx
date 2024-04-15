@@ -26,10 +26,7 @@ export default function Consult (){
         e.preventDefault();
         
         try {
-            const {data} = await  axios.post('/survey/results', {
-                phone_number:responses.phone_number,
-                full_name: responses.full_name
-            });
+            const {data} = await  axios.get(`/survey/results?phone_number=${responses.phone_number}&full_name=${responses.full_name}`);
             dispatch(setUser(data.id));
             navigate('/survey/update');
         } catch (error) {
