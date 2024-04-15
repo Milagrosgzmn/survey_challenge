@@ -47,7 +47,7 @@ export default function UpdateSurvey (){
             <div  key={index}>
             {key !== 'id' && 
             <div className="w-full flex justify-start" >
-              <span className=" my-2 font-semibold w-8/12" >{tranlate[key]} :</span> <span className="my-2">{ !value ? 'No respondió ' : typeof value === 'boolean' ? value ? 'Sí' : 'No' : typeof value === 'string' ? value.slice(0,1).toUpperCase()+value.slice(1) : value }</span>
+              <span className=" my-2 font-semibold w-8/12" >{tranlate[key]} :</span> <span className="my-2">{ typeof value === 'boolean' ? value ? 'Sí' : 'No' : !value ? 'No respondió' : typeof value === 'string' ? value.slice(0,1).toUpperCase()+value.slice(1) :  value }</span>
             </div>}
            </div> 
           ))}
